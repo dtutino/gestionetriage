@@ -1,7 +1,7 @@
 package it.prova.gestionetriage.model;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,7 +51,11 @@ public class Utente {
 	@JoinTable(name = "utenti_authorities", joinColumns = {
 			@JoinColumn(name = "utente_username", referencedColumnName = "username") }, inverseJoinColumns = {
 					@JoinColumn(name = "authority_id", referencedColumnName = "id") })
-	private Set<Authority> authorities;
+	private List<Authority> authorities;
+
+	public Utente() {
+		super();
+	}
 
 	public Utente(Long id, @NotNull @Size(min = 2, max = 50) String nome,
 			@NotNull @Size(min = 2, max = 50) String cognome, @NotNull @Size(min = 4, max = 50) String username,
@@ -122,11 +126,11 @@ public class Utente {
 		this.statoUtente = statoUtente;
 	}
 
-	public Set<Authority> getAuthorities() {
+	public List<Authority> getAuthorities() {
 		return authorities;
 	}
 
-	public void setAuthorities(Set<Authority> authorities) {
+	public void setAuthorities(List<Authority> authorities) {
 		this.authorities = authorities;
 	}
 

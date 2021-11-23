@@ -33,7 +33,11 @@ public class Authority {
     @JsonBackReference
     private Set<Utente> users;
 
-    public Authority(Long id) {
+    public Authority() {
+		super();
+	}
+
+	public Authority(Long id) {
 		super();
 		this.id = id;
 	}

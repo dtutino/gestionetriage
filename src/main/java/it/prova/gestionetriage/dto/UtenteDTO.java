@@ -125,7 +125,7 @@ public class UtenteDTO {
 		Utente result = new Utente(this.id, this.nome, this.cognome, this.username, this.password, this.dataIscrizione,
 				this.statoUtente);
 		if (includeIdRoles && authoritiesIds != null)
-			result.setAuthorities(Arrays.asList(authoritiesIds).stream().map(id -> new Authority(id)).collect(Collectors.toSet()));
+			result.setAuthorities(Arrays.asList(authoritiesIds).stream().map(id -> new Authority(id)).collect(Collectors.toList()));
 
 		return result;
 	}
