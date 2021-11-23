@@ -1,7 +1,7 @@
 package it.prova.gestionetriage.model;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,13 +45,26 @@ public class Utente {
 	
 	@Column(name = "enabled")
 	@NotNull
-	private Boolean enabled;
+	private StatoUtente statoUtente;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "utenti_authorities", joinColumns = {
 			@JoinColumn(name = "utente_username", referencedColumnName = "username") }, inverseJoinColumns = {
 					@JoinColumn(name = "authority_id", referencedColumnName = "id") })
-	private List<Authority> authorities;
+	private Set<Authority> authorities;
+
+	public Utente(Long id, @NotNull @Size(min = 2, max = 50) String nome,
+			@NotNull @Size(min = 2, max = 50) String cognome, @NotNull @Size(min = 4, max = 50) String username,
+			@NotNull @Size(min = 4, max = 100) String password, Date dataRegistrazione, @NotNull StatoUtente statoUtente) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.username = username;
+		this.password = password;
+		this.dataRegistrazione = dataRegistrazione;
+		this.statoUtente = statoUtente;
+	}
 
 	public Long getId() {
 		return id;
@@ -101,19 +114,19 @@ public class Utente {
 		this.dataRegistrazione = dataRegistrazione;
 	}
 
-	public Boolean getEnabled() {
-		return enabled;
+	public StatoUtente getStatoUtente() {
+		return statoUtente;
 	}
 
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
+	public void setStatoUtente(StatoUtente statoUtente) {
+		this.statoUtente = statoUtente;
 	}
 
-	public List<Authority> getAuthorities() {
+	public Set<Authority> getAuthorities() {
 		return authorities;
 	}
 
-	public void setAuthorities(List<Authority> authorities) {
+	public void setAuthorities(Set<Authority> authorities) {
 		this.authorities = authorities;
 	}
 

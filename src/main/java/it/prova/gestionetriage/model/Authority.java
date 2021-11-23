@@ -1,5 +1,5 @@
 package it.prova.gestionetriage.model;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,9 +31,20 @@ public class Authority {
 
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
     @JsonBackReference
-    private List<Utente> users;
+    private Set<Utente> users;
 
-    public Long getId() {
+    public Authority(Long id) {
+		super();
+		this.id = id;
+	}
+
+	public Authority(Long id, AuthorityName name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -49,11 +60,11 @@ public class Authority {
         this.name = name;
     }
 
-    public List<Utente> getUsers() {
+    public Set<Utente> getUsers() {
         return users;
     }
 
-    public void setUsers(List<Utente> users) {
+    public void setUsers(Set<Utente> users) {
         this.users = users;
     }
 }
