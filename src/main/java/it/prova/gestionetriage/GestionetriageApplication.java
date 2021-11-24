@@ -13,10 +13,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import it.prova.gestionetriage.model.Authority;
 import it.prova.gestionetriage.model.AuthorityName;
+import it.prova.gestionetriage.model.Dottore;
+import it.prova.gestionetriage.model.Paziente;
+import it.prova.gestionetriage.model.StatoPaziente;
 import it.prova.gestionetriage.model.StatoUtente;
 import it.prova.gestionetriage.model.Utente;
 import it.prova.gestionetriage.security.repository.AuthorityRepository;
 import it.prova.gestionetriage.security.repository.UtenteRepository;
+import it.prova.gestionetriage.service.DottoreService;
+import it.prova.gestionetriage.service.PazienteService;
 
 @SpringBootApplication
 public class GestionetriageApplication {
@@ -27,6 +32,10 @@ public class GestionetriageApplication {
 	AuthorityRepository authorityRepository;
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	@Autowired
+	private DottoreService dottoreService;
+	@Autowired
+	private PazienteService pazienteService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(GestionetriageApplication.class, args);
@@ -36,7 +45,6 @@ public class GestionetriageApplication {
 	public CommandLineRunner initGestioneTriage() {
 		return (args) -> {
 
-			// Ora la parte di sicurezza
 			Utente user = userRepository.findByUsername("admin").orElse(null);
 
 			if (user == null) {
@@ -97,6 +105,25 @@ public class GestionetriageApplication {
 				commonUser = userRepository.save(commonUser);
 
 			}
+			
+			//Dottore dottorLuigi = dottoreService.cercaPerCodiceDipendente("DOTT-Luigi")
+			
+			Dottore dottorLuigi = new Dottore();
+			dottorLuigi.setCodiceDipendente("DOTT-Luigi");
+			dottorLuigi.setNome("Luigi");
+			dottorLuigi.setCognome("Bianchi");
+			
+			dottorLuigi = dottoreService.inserisciNuovo(dottorLuigi);
+			
+			Paziente pazienteMario = new Paziente();
+			pazienteMario.setNome("Mario");
+			pazienteMario.setCognome("Rossi");
+			pazienteMario.setCodiceFiscale("mrdfj335jsd");
+			pazienteMario.setStatoPaziente(StatoPaziente.IN_VISITA);
+			pazienteMario.setDottore(dottoreService.cariscaSingoloElemento(1L));
+			
+			pazienteMario = pazienteService.inserisciNuovo(pazienteMario);
+			
 		};
 	}
 

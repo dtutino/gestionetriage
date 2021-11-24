@@ -2,11 +2,11 @@ package it.prova.gestionetriage.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,13 +17,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "utente")
+@Table(name = "paziente")
 public class Paziente implements Serializable {
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4L;
 	
 	@Id
     @Column(name = "id")
@@ -49,8 +49,8 @@ public class Paziente implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private StatoPaziente statoPaziente;
 	
-    @OneToOne(targetEntity = Dottore.class, fetch = FetchType.LAZY)
-    @JoinColumn(nullable = true, name = "dottore_id")
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "dottore_id", referencedColumnName = "id")
 	private Dottore dottore;
 
 	public Paziente() {

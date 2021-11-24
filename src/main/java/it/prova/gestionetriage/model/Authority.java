@@ -23,7 +23,7 @@ public class Authority implements Serializable {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 
 	@Id
     @Column(name = "id")

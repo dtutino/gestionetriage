@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -21,7 +21,7 @@ public class Dottore implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,8 +43,7 @@ public class Dottore implements Serializable {
 	@Column(name = "codiceDipendente")
 	private String codiceDipendente;
 	
-    @OneToOne(targetEntity = Paziente.class, fetch = FetchType.LAZY)
-    @JoinColumn(nullable = true, name = "paziente_id")
+	@OneToOne(mappedBy = "dottore")
 	private Paziente paziente;
 	
 	public Dottore() {
