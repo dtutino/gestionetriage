@@ -1,6 +1,7 @@
 package it.prova.gestionetriage;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class GestionetriageApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner initDispositivi() {
+	public CommandLineRunner initGestioneTriage() {
 		return (args) -> {
 
 			// Ora la parte di sicurezza
@@ -57,6 +58,9 @@ public class GestionetriageApplication {
 				user = new Utente();
 				user.setAuthorities(authorities);
 				user.setStatoUtente(StatoUtente.ABILITATO);
+				user.setNome("Mario");
+				user.setCognome("Rossi");
+				user.setDataRegistrazione(new Date());
 				user.setUsername("admin");
 				user.setPassword(passwordEncoder.encode("admin"));
 
@@ -84,6 +88,9 @@ public class GestionetriageApplication {
 				commonUser = new Utente();
 				commonUser.setAuthorities(authorities);
 				commonUser.setStatoUtente(StatoUtente.ABILITATO);
+				commonUser.setNome("Fabio");
+				commonUser.setCognome("Gialli");
+				commonUser.setDataRegistrazione(new Date());
 				commonUser.setUsername("commonUser");
 				commonUser.setPassword(passwordEncoder.encode("commonUser"));
 

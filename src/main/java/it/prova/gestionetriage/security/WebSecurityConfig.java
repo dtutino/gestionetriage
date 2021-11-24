@@ -85,9 +85,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.js"
                 ).permitAll()
                 .antMatchers("/public/**").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/dispositivo/**").hasAnyAuthority("ROLE_USER")
-                .antMatchers(HttpMethod.POST,"/api/dispositivo/search").hasAnyAuthority("ROLE_USER")
-                .antMatchers("/api/dispositivo/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.GET,"/api/utente/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers(HttpMethod.POST,"/api/utente/search").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/api/utente/**").hasAnyAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated();
 
         // Filtro Custom JWT

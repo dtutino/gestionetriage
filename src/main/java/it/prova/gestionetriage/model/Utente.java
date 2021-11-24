@@ -1,11 +1,16 @@
 package it.prova.gestionetriage.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -16,9 +21,16 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "utente")
-public class Utente {
+public class Utente implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(name = "nome", length = 50)
@@ -43,8 +55,8 @@ public class Utente {
 	
 	private Date dataRegistrazione;
 	
-	@Column(name = "enabled")
-	@NotNull
+	@Column(name = "statoUtente")
+	@Enumerated(EnumType.STRING)
 	private StatoUtente statoUtente;
 	
 	@ManyToMany(fetch = FetchType.EAGER)

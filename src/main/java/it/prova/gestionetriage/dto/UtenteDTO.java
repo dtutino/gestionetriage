@@ -2,10 +2,13 @@ package it.prova.gestionetriage.dto;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import it.prova.gestionetriage.model.Authority;
 import it.prova.gestionetriage.model.StatoUtente;
@@ -13,6 +16,7 @@ import it.prova.gestionetriage.model.Utente;
 import it.prova.gestionetriage.validation.ValidationNoPassword;
 import it.prova.gestionetriage.validation.ValidationWithPassword;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UtenteDTO {
 
 	private Long id;
@@ -28,14 +32,14 @@ public class UtenteDTO {
 	private String username;
 
 	@NotBlank(message = "{password.notblank}", groups = ValidationWithPassword.class)
-	@Size(min = 8, max = 15, message = "Il valore inserito deve essere lungo tra {min} e {max} caratteri")
+	@Size(min = 3, max = 15, message = "Il valore inserito deve essere lungo tra {min} e {max} caratteri")
 	private String password;
 
 	private Date dataIscrizione;
 
 	private StatoUtente statoUtente;
 
-	private Long[] authoritiesIds;
+	private Long[] authorities;
 
 	public UtenteDTO() {
 	}
@@ -113,19 +117,19 @@ public class UtenteDTO {
 		this.statoUtente = statoUtente;
 	}
 
-	public Long[] getauthoritiesIds() {
-		return authoritiesIds;
+	public Long[] getauthorities() {
+		return authorities;
 	}
 
-	public void setauthoritiesIds(Long[] authoritiesIds) {
-		this.authoritiesIds = authoritiesIds;
+	public void setauthorities(Long[] authorities) {
+		this.authorities = authorities;
 	}
 
 	public Utente buildUtenteModel(boolean includeIdRoles) {
 		Utente result = new Utente(this.id, this.nome, this.cognome, this.username, this.password, this.dataIscrizione,
 				this.statoUtente);
-		if (includeIdRoles && authoritiesIds != null)
-			result.setAuthorities(Arrays.asList(authoritiesIds).stream().map(id -> new Authority(id)).collect(Collectors.toList()));
+		if (includeIdRoles && authorities != null)
+			result.setAuthorities(Arrays.asList(authorities).stream().map(id -> new Authority(id)).collect(Collectors.toList()));
 
 		return result;
 	}
@@ -136,10 +140,16 @@ public class UtenteDTO {
 				utenteModel.getCognome(), utenteModel.getUsername(), utenteModel.getDataRegistrazione(), utenteModel.getStatoUtente());
 
 		if (!utenteModel.getAuthorities().isEmpty())
-			result.authoritiesIds = utenteModel.getAuthorities().stream().map(r -> r.getId()).collect(Collectors.toList())
+			result.authorities = utenteModel.getAuthorities().stream().map(r -> r.getId()).collect(Collectors.toList())
 					.toArray(new Long[] {});
 
 		return result;
+	}
+	
+	public static List<UtenteDTO> createUtenteDTOListFromModelList(List<Utente> modelListInput) {
+		return modelListInput.stream().map(utenteEntity -> {
+			return UtenteDTO.buildUtenteDTOFromModel(utenteEntity);
+		}).collect(Collectors.toList());
 	}
 
 }

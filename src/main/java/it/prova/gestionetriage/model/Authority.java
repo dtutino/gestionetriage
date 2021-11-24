@@ -1,4 +1,5 @@
 package it.prova.gestionetriage.model;
+import java.io.Serializable;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -17,9 +18,14 @@ import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "authorities")
-public class Authority {
+public class Authority implements Serializable {
 
-    @Id
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
